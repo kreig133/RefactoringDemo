@@ -16,7 +16,7 @@ public class CustomerTest{
     }
 
     @Test
-    public void testStatement() {
+    public void testNewRelease() {
         final Customer customer = new Customer(testString);
         final String title = "title";
         final Movie movie = new Movie(title, PriceCodes.NewRelease);
