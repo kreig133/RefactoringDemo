@@ -25,8 +25,10 @@ public class CustomerTest{
         customer.addRental(rental);
 
         final String statement = customer.Statement();
+        assertTrue(statement.contains(title + "\t"+ 30));
 
-        assertTrue(statement.contains(title + 30));
+        assertTrue(customer.getName().equals(testString));
+
     }
 
     @Test
