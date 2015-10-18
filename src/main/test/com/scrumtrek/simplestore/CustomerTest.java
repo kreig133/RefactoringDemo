@@ -11,17 +11,27 @@ public class CustomerTest{
 
     @Test
     public void testGetName() {
-        Customer customer = new Customer(testString);
+        final Customer customer = new Customer(testString);
         assertEquals(customer.getName(), testString);
     }
 
     @Test
     public void testStatement() {
-        Customer customer = new Customer(testString);
-        customer.addRental(new Rental(new Movie("title", PriceCodes.NewRelease), 10));
+        final Customer customer = new Customer(testString);
+        final String title = "title";
+        final Movie movie = new Movie(title, PriceCodes.NewRelease);
+        final Rental rental = new Rental(movie, 10);
 
-        String statement = customer.Statement();
+        customer.addRental(rental);
 
-        assertTrue(statement.contains("title\t30"));
+        final String statement = customer.Statement();
+
+        assertTrue(statement.contains(title + 30));
+    }
+
+    @Test
+    public void testPriceCodes() throws Exception {
+
+
     }
 }
