@@ -28,5 +28,9 @@ class MainClass {
 		// Print the statement
 		System.out.println(statement);		
 	}
+
+	public static void main(String[] args) {
+		Main(null);
+	}
 }
 

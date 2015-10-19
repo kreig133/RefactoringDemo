@@ -17,7 +17,6 @@ public class Customer {
 		return name;
 	}
 
-
 	public void addRental(Rental arg){
 		rentals.add(arg);
 	}
@@ -27,7 +26,8 @@ public class Customer {
 		double totalAmount = 0;
 		int frequentRenterPoints = 0;
 				
-		String rentalReport = "";
+		StringBuilder rentalReport = new StringBuilder();
+
 		for(Rental each: rentals) {
 			double thisAmount = calculateAmountForRental(each);
 
@@ -41,12 +41,17 @@ public class Customer {
 			}
 
 			// Show figures for this rental
-			rentalReport += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
+			generateStatementPartForRental(rentalReport, each, thisAmount);
 			totalAmount += thisAmount;
 		}
 
 
-		return generateStatement(totalAmount, frequentRenterPoints, rentalReport);
+		return generateStatement(totalAmount, frequentRenterPoints, rentalReport.toString());
+	}
+
+	@VisibleForTesting
+	void generateStatementPartForRental(StringBuilder rentalReport, Rental each, double thisAmount) {
+		rentalReport.append("\t").append(each.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
 	}
 
 	@VisibleForTesting
@@ -80,12 +85,18 @@ public class Customer {
 
 	@VisibleForTesting
 	String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
-		String result = "Rental record for " + name + "\n";
-		result += rentalReport;
-		// Add footer lines
-		result += "Amount owed is " + totalAmount + "\n";
-		result += "You earned " + frequentRenterPoints + " frequent renter points.";
-		return result;
+		return new StringBuilder("Rental record for ")
+				.append(name)
+				.append("\n")
+				.append(rentalReport)
+				// Add footer lines
+				.append("Amount owed is " )
+				.append(totalAmount)
+				.append("\n")
+				.append("You earned ")
+				.append(frequentRenterPoints)
+				.append(" frequent renter points.")
+				.toString();
 	}
 }
 
