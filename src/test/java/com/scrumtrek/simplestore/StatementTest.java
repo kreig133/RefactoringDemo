@@ -26,13 +26,13 @@ public class StatementTest {
 
     // Helper methods
     private void testState(String[] results, int day) {
-        testAll(results[0], day, new StatementComputingRegular());
-        testAll(results[1], day, new StatementComputingNewRelease());
-        testAll(results[2], day, new StatementComputingChildren());
+        testAll(results[0], day, new StatementComputingStrategyRegular());
+        testAll(results[1], day, new StatementComputingStrategyNewRelease());
+        testAll(results[2], day, new StatementComputingStrategyChildren());
     }
 
-    private void testAll(String result, int day, StatementComputing priceCode) {
-        final Rental rental = new Rental(new Movie(TITLE, priceCode), day);
+    private void testAll(String result, int day, StatementComputingStrategy computingStrategy) {
+        final Rental rental = new Rental(new Movie(TITLE, computingStrategy), day);
         final Customer customer = new Customer(CUSTOMER_NAME);
         customer.addRental(rental);
 

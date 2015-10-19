@@ -47,7 +47,7 @@ public class Customer {
 	}
 
 	boolean needToAddBonus(Rental each) {
-		return each.getMovie().getPriceCode() instanceof StatementComputingNewRelease
+		return each.getMovie().getComputingStrategy() instanceof StatementComputingStrategyNewRelease
 				&& each.getDaysRented() > 1;
 	}
 
@@ -55,7 +55,7 @@ public class Customer {
 	double calculateAmountForRental(Rental rental) {
 		double thisAmount = 0;
 
-		thisAmount = rental.getMovie().getPriceCode().computeAmount(rental, thisAmount);
+		thisAmount = rental.getMovie().getComputingStrategy().computeAmount(rental, thisAmount);
 
 		return thisAmount;
 	}
