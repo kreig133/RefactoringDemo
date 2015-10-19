@@ -5,13 +5,13 @@ package com.scrumtrek.simplestore;
  */
 public class StatementComputingStrategyRegular implements StatementComputingStrategy {
 
-    public double computeAmount(Rental rental, double thisAmount) {
-        thisAmount += 2;
-        if (rental.getDaysRented() > 2)
+    public double computeAmount(double currentAmount, int daysRented) {
+        currentAmount += 2;
+        if (daysRented > 2)
         {
-            thisAmount += (rental.getDaysRented() - 2) * 1.5;
+            currentAmount += (daysRented - 2) * 1.5;
         }
-        return thisAmount;
+        return currentAmount;
     }
 
     public boolean needToAddBonus(int daysMoreThanOne){

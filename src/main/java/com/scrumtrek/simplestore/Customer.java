@@ -51,7 +51,7 @@ public class Customer {
 	double calculateAmountForRental(Rental rental) {
 		double thisAmount = 0;
 
-		thisAmount = rental.getMovie().getComputingStrategy().computeAmount(rental, thisAmount);
+		thisAmount = rental.getMovie().getComputingStrategy().computeAmount(thisAmount, rental.getDaysRented());
 
 		return thisAmount;
 	}
