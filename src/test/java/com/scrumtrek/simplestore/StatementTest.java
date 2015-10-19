@@ -30,7 +30,7 @@ public class StatementTest {
             final Customer customer = new Customer(CUSTOMER_NAME);
             customer.addRental(rental);
 
-            final String statement = customer.Statement();
+            final String statement = customer.statement();
             System.out.println("statement = " + statement);
 
             assertTrue(statement.equals(results[priceCode.ordinal()]));
