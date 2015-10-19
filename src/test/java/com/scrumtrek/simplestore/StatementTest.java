@@ -1,10 +1,10 @@
 package com.scrumtrek.simplestore;
 
+import com.scrumtrek.simplestore.statement.StatementGenerator;
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy;
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyChildren;
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyNewRelease;
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyRegular;
-import com.scrumtrek.simplestore.statement.StatementGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,38 +38,38 @@ public class StatementTest {
         String statement = StatementGenerator.generateStatement(custMickeyMouse);
 
         final String actualStatement = "Rental record for Mickey Mouse\n" +
-                "\tCinderella\t3.0\n" +
-                "\tStar Wars\t6.5\n" +
-                "\tGladiator\t15.0\n" +
-                "Amount owed is 24.5\n" +
-                "You earned 4 frequent renter points.";
+          "\tCinderella\t3.0\n" +
+          "\tStar Wars\t6.5\n" +
+          "\tGladiator\t15.0\n" +
+          "Amount owed is 24.5\n" +
+          "You earned 4 frequent renter points.";
 
         assertEquals(statement, actualStatement);
     }
 
     @Test
     public void testNewRelease() {
-        final String pr1 = getPr("2.0","2.0",1);
-        final String pr2 = getPr("3.0",  "3.0" , 1);
-        final String pr3 = getPr("1.5", "1.5", 1);
+        final String expectedResult1 = getExpectedResult("2.0", "2.0", 1);
+        final String expectedResult2 = getExpectedResult("3.0", "3.0", 1);
+        final String expectedResult3 = getExpectedResult("1.5", "1.5", 1);
 
-        testState(new String[]{pr1, pr2, pr3}, 1);
+        testState(new String[] { expectedResult1, expectedResult2, expectedResult3 }, 1);
 
-        final String pr11 = getPr("5.0","5.0",1);
-        final String pr21 = getPr("12.0",  "12.0" , 2);
-        final String pr31 = getPr("1.5", "1.5", 1);
+        final String pr11 = getExpectedResult("5.0", "5.0", 1);
+        final String pr21 = getExpectedResult("12.0", "12.0", 2);
+        final String pr31 = getExpectedResult("1.5", "1.5", 1);
 
-        testState(new String[]{pr11, pr21, pr31}, 4);
+        testState(new String[] { pr11, pr21, pr31 }, 4);
     }
 
     // Helper methods
     private void testState(String[] results, int day) {
-        testAll(results[0], day, new StatementComputingStrategyRegular());
-        testAll(results[1], day, new StatementComputingStrategyNewRelease());
-        testAll(results[2], day, new StatementComputingStrategyChildren());
+        checkResultForStrategyAndDays(results[0], day, new StatementComputingStrategyRegular());
+        checkResultForStrategyAndDays(results[1], day, new StatementComputingStrategyNewRelease());
+        checkResultForStrategyAndDays(results[2], day, new StatementComputingStrategyChildren());
     }
 
-    private void testAll(String result, int day, StatementComputingStrategy computingStrategy) {
+    private void checkResultForStrategyAndDays(String result, int day, StatementComputingStrategy computingStrategy) {
         final Rental rental = new Rental(new Movie(TITLE, computingStrategy), day);
         final Customer customer = new Customer(CUSTOMER_NAME);
         customer.addRental(rental);
@@ -80,10 +80,10 @@ public class StatementTest {
         assertTrue(statement.equals(result));
     }
 
-    private String getPr(String num, String amount, int points) {
-        return "Rental record for "+CUSTOMER_NAME+"\n"
-              + "\ttitle\t" + num + "\n"
-              + "Amount owed is " + amount + "\n"
-              + "You earned "+points+" frequent renter points.";
+    private String getExpectedResult(String num, String amount, int points) {
+        return "Rental record for " + CUSTOMER_NAME + "\n"
+          + "\ttitle\t" + num + "\n"
+          + "Amount owed is " + amount + "\n"
+          + "You earned " + points + " frequent renter points.";
     }
 }

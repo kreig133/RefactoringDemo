@@ -6,22 +6,22 @@ import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MovieTest {
 
     private Movie movie;
-    private StatementComputingStrategy childrens = new StatementComputingStrategyChildren();
+    private StatementComputingStrategy computingStrategyChildren = new StatementComputingStrategyChildren();
     private String title = "title";
 
     @Before
     public void before() {
-        movie = new Movie(title, childrens);
+        movie = new Movie(title, computingStrategyChildren);
     }
 
     @Test
     public void testComputingStrategy() {
-        assertEquals(movie.getComputingStrategy(), childrens);
+        assertEquals(movie.getComputingStrategy(), computingStrategyChildren);
     }
 
     @Test

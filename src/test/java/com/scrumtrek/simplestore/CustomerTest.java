@@ -3,9 +3,9 @@ package com.scrumtrek.simplestore;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class CustomerTest{
+public class CustomerTest {
     private static final String CUSTOMER_NAME = "CUSTOMER_NAME";
 
     @Test
