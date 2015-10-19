@@ -6,9 +6,6 @@ import org.mockito.Mockito;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Alexey on 18.10.2015.
- */
 public class RentalTest {
 
     private Movie movieMock = Mockito.mock(Movie.class);
