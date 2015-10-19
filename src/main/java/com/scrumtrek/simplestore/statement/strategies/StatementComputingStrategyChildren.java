@@ -1,4 +1,4 @@
-package com.scrumtrek.simplestore;
+package com.scrumtrek.simplestore.statement.strategies;
 
 public class StatementComputingStrategyChildren implements StatementComputingStrategy {
     @Override

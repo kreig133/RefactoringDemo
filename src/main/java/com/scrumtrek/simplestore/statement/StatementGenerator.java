@@ -1,7 +1,9 @@
-package com.scrumtrek.simplestore;
+package com.scrumtrek.simplestore.statement;
 
 
 import com.google.common.annotations.VisibleForTesting;
+import com.scrumtrek.simplestore.Customer;
+import com.scrumtrek.simplestore.Rental;
 
 public class StatementGenerator {
 

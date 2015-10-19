@@ -1,5 +1,10 @@
 package com.scrumtrek.simplestore;
 
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy;
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyChildren;
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyNewRelease;
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyRegular;
+import com.scrumtrek.simplestore.statement.StatementGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

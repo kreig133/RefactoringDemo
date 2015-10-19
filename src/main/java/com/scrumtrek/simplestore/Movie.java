@@ -1,5 +1,7 @@
 package com.scrumtrek.simplestore;
 
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy;
+
 /**
  * This class incapsulates movie
  */

@@ -1,5 +1,8 @@
 package com.scrumtrek.simplestore;
 
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy;
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyChildren;
+import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyRegular;
 import org.junit.Before;
 import org.junit.Test;
 
