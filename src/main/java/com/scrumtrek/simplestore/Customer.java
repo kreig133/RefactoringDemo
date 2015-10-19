@@ -43,7 +43,6 @@ public class Customer {
 			totalAmount += thisAmount;
 		}
 
-
 		return generateStatement(totalAmount, frequentRenterPoints, rentalReport.toString());
 	}
 
@@ -53,19 +52,17 @@ public class Customer {
 	}
 
 	@VisibleForTesting
-	void generateStatementPartForRental(StringBuilder rentalReport, Rental each, double thisAmount) {
-		rentalReport.append("\t").append(each.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
-	}
-
-	@VisibleForTesting
 	double calculateAmountForRental(Rental rental) {
 		double thisAmount = 0;
 
 		thisAmount = rental.getMovie().getPriceCode().computeAmount(rental, thisAmount);
 
-		// Determine amounts for each line
-
 		return thisAmount;
+	}
+
+	@VisibleForTesting
+	void generateStatementPartForRental(StringBuilder rentalReport, Rental each, double thisAmount) {
+		rentalReport.append("\t").append(each.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
 	}
 
 	@VisibleForTesting
@@ -74,17 +71,20 @@ public class Customer {
 		
 		addStatementHeader(stringBuilder);
 
-		return stringBuilder
+		//add body
+		stringBuilder.append(rentalReport);
 
-				.append(rentalReport)
-				// Add footer lines
-				.append("Amount owed is ")
+		addStatementFooter(stringBuilder, totalAmount, frequentRenterPoints);
+		return stringBuilder.toString();
+	}
+
+	private void addStatementFooter(StringBuilder stringBuilder, double totalAmount, int frequentRenterPoints) {
+		stringBuilder.append("Amount owed is ")
 				.append(totalAmount)
 				.append("\n")
 				.append("You earned ")
 				.append(frequentRenterPoints)
-				.append(" frequent renter points.")
-				.toString();
+				.append(" frequent renter points.");
 	}
 
 	private void addStatementHeader(StringBuilder stringBuilder) {
