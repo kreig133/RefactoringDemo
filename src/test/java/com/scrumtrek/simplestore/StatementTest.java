@@ -6,14 +6,71 @@ import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategy
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyNewRelease;
 import com.scrumtrek.simplestore.statement.strategies.StatementComputingStrategyRegular;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(Parameterized.class)
 public class StatementTest {
-    private String CUSTOMER_NAME = "CUSTOMER_NAME";
+    private static final String CUSTOMER_NAME = "CUSTOMER_NAME";
     private static final String TITLE = "title";
+    private StatementComputingStrategy inputStrategy;
+    private int inputDays;
+    private String expectedResultStatement;
 
+    public StatementTest(StatementComputingStrategy input, int days, String expected) {
+        inputStrategy = input;
+        inputDays = days;
+        expectedResultStatement = expected;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> testData() {
+        return Arrays.asList(new Object[][] {
+          {
+            new StatementComputingStrategyRegular(),
+            1,
+            getExpectedResult("2.0", "2.0", 1)
+          },
+          {
+            new StatementComputingStrategyNewRelease(),
+            1,
+            getExpectedResult("3.0", "3.0", 1),
+          },
+          {
+            new StatementComputingStrategyChildren(),
+            1,
+            getExpectedResult("1.5", "1.5", 1)
+          },
+          {
+            new StatementComputingStrategyRegular(),
+            4,
+            getExpectedResult("5.0", "5.0", 1)
+          },
+          {
+            new StatementComputingStrategyNewRelease(),
+            4,
+            getExpectedResult("12.0", "12.0", 2),
+          },
+          {
+            new StatementComputingStrategyChildren(),
+            4,
+            getExpectedResult("1.5", "1.5", 1)
+          }
+        });
+    }
+
+    private static String getExpectedResult(String num, String amount, int points) {
+        return "Rental record for " + CUSTOMER_NAME + "\n"
+          + "\ttitle\t" + num + "\n"
+          + "Amount owed is " + amount + "\n"
+          + "You earned " + points + " frequent renter points.";
+    }
 
     @Test
     public void testStatement() {
@@ -47,26 +104,33 @@ public class StatementTest {
         assertEquals(statement, actualStatement);
     }
 
+    //    @Test
+    //    public void testOneDay() {
+    //        final String expectedResult1 = getExpectedResult("2.0", "2.0", 1);
+    //        final String expectedResult2 = getExpectedResult("3.0", "3.0", 1);
+    //        final String expectedResult3 = getExpectedResult("1.5", "1.5", 1);
+    //
+    //        checkStrategies(new String[] { expectedResult1, expectedResult2, expectedResult3 }, 1);
+    //    }
+    //
+    //    @Test
+    //    public void testFourDays() {
+    //        final String pr11 = getExpectedResult("5.0", "5.0", 1);
+    //        final String pr21 = getExpectedResult("12.0", "12.0", 2);
+    //        final String pr31 = getExpectedResult("1.5", "1.5", 1);
+    //
+    //        checkStrategies(new String[] { pr11, pr21, pr31 }, 4);
+    //    }
+    //
+    //    private void checkStrategies(String[] results, int day) {
+    //        checkResultForStrategyAndDays(results[0], day, new StatementComputingStrategyRegular());
+    //        checkResultForStrategyAndDays(results[1], day, new StatementComputingStrategyNewRelease());
+    //        checkResultForStrategyAndDays(results[2], day, new StatementComputingStrategyChildren());
+    //    }
+
     @Test
-    public void testNewRelease() {
-        final String expectedResult1 = getExpectedResult("2.0", "2.0", 1);
-        final String expectedResult2 = getExpectedResult("3.0", "3.0", 1);
-        final String expectedResult3 = getExpectedResult("1.5", "1.5", 1);
-
-        testState(new String[] { expectedResult1, expectedResult2, expectedResult3 }, 1);
-
-        final String pr11 = getExpectedResult("5.0", "5.0", 1);
-        final String pr21 = getExpectedResult("12.0", "12.0", 2);
-        final String pr31 = getExpectedResult("1.5", "1.5", 1);
-
-        testState(new String[] { pr11, pr21, pr31 }, 4);
-    }
-
-    // Helper methods
-    private void testState(String[] results, int day) {
-        checkResultForStrategyAndDays(results[0], day, new StatementComputingStrategyRegular());
-        checkResultForStrategyAndDays(results[1], day, new StatementComputingStrategyNewRelease());
-        checkResultForStrategyAndDays(results[2], day, new StatementComputingStrategyChildren());
+    public void test() {
+        checkResultForStrategyAndDays(expectedResultStatement, inputDays, inputStrategy);
     }
 
     private void checkResultForStrategyAndDays(String result, int day, StatementComputingStrategy computingStrategy) {
@@ -75,15 +139,7 @@ public class StatementTest {
         customer.addRental(rental);
 
         final String statement = StatementGenerator.generateStatement(customer);
-        System.out.println("statement = " + statement);
 
         assertTrue(statement.equals(result));
-    }
-
-    private String getExpectedResult(String num, String amount, int points) {
-        return "Rental record for " + CUSTOMER_NAME + "\n"
-          + "\ttitle\t" + num + "\n"
-          + "Amount owed is " + amount + "\n"
-          + "You earned " + points + " frequent renter points.";
     }
 }
