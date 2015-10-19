@@ -34,7 +34,7 @@ public class Customer {
 			frequentRenterPoints++;
 
 			// Add bonus for a two-day new-release rental
-			if (needToAddBonus(each)) {
+			if (each.getMovie().getComputingStrategy().needToAddBonus(each.getDaysRented())) {
 				frequentRenterPoints ++;
 			}
 
@@ -46,11 +46,6 @@ public class Customer {
 		return StatementGenerator.generateStatement(name, totalAmount, frequentRenterPoints, rentalReport.toString());
 	}
 
-	@VisibleForTesting
-	boolean needToAddBonus(Rental each) {
-		return each.getMovie().getComputingStrategy() instanceof StatementComputingStrategyNewRelease
-				&& each.getDaysRented() > 1;
-	}
 
 	@VisibleForTesting
 	double calculateAmountForRental(Rental rental) {

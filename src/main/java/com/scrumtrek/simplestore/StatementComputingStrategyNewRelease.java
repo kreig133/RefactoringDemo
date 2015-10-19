@@ -10,4 +10,8 @@ public class StatementComputingStrategyNewRelease implements StatementComputingS
 
         return thisAmount;
     }
+
+    public boolean needToAddBonus(int daysMoreThanOne){
+        return daysMoreThanOne > 1;
+    }
 }

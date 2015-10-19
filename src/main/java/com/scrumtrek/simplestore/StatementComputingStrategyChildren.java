@@ -14,4 +14,7 @@ public class StatementComputingStrategyChildren implements StatementComputingStr
         return thisAmount;
     }
 
+    public boolean needToAddBonus(int daysMoreThanOne){
+        return false;
+    }
 }
