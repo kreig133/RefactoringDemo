@@ -16,11 +16,19 @@ public class StatementGenerator {
         return stringBuilder.toString();
     }
 
+    @VisibleForTesting
+    static private void addStatementHeader(StringBuilder stringBuilder, String name) {
+        stringBuilder
+                .append("Rental record for ")
+                .append(name)
+                .append("\n");
+    }
+
     private static void addStatementBody(StringBuilder stringBuilder, Customer customer) {
         for (Rental each : customer.getRentals()) {
             // Show figures for this rental
             generateStatementPartForRental(stringBuilder, each,
-                    each.getMovie().getComputingStrategy().computeAmount(0, each.getDaysRented()));
+                    each.getMovie().getComputingStrategy().computeAmount(each.getDaysRented()));
         }
     }
 
@@ -62,17 +70,11 @@ public class StatementGenerator {
         double totalAmount = 0;
 
         for (Rental each : customer.getRentals()) {
-            totalAmount += each.getMovie().getComputingStrategy().computeAmount(0, each.getDaysRented());
+            totalAmount += each.getMovie().getComputingStrategy().computeAmount(each.getDaysRented());
         }
 
         return totalAmount;
     }
 
-    @VisibleForTesting
-    static private void addStatementHeader(StringBuilder stringBuilder, String name) {
-        stringBuilder
-                .append("Rental record for ")
-                .append(name)
-                .append("\n");
-    }
+
 }
