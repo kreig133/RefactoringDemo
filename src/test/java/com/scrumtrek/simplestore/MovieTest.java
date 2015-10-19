@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class MovieTest {
 
     private Movie movie;
-    private PriceCodes childrens = PriceCodes.Childrens;
+    private PriceCodes childrens = PriceCodes.CHILDRENS;
     private String title = "title";
 
     @Before
@@ -23,7 +23,7 @@ public class MovieTest {
 
     @Test
     public void testSetPriceCode() {
-        PriceCodes newPriceCode = PriceCodes.Regular;
+        PriceCodes newPriceCode = PriceCodes.REGULAR;
         movie.setPriceCode(newPriceCode);
         assertEquals(movie.getPriceCode(), newPriceCode);
     }
