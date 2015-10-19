@@ -1,5 +1,8 @@
 package com.scrumtrek.simplestore;
 
+/**
+ * Class for rental info.
+ */
 public class Rental {
 	private Movie movie;
 	private int daysRented;

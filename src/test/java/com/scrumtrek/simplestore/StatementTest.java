@@ -24,17 +24,22 @@ public class StatementTest {
         testState(new String[]{pr11, pr21, pr31}, 4);
     }
 
+    // Helper methods
     private void testState(String[] results, int day) {
-        for (PriceCodes priceCode : PriceCodes.values()) {
-            final Rental rental = new Rental(new Movie(TITLE, priceCode), day);
-            final Customer customer = new Customer(CUSTOMER_NAME);
-            customer.addRental(rental);
+        testAll(results[0], day, new StatementComputingRegular());
+        testAll(results[1], day, new StatementComputingNewRelease());
+        testAll(results[2], day, new StatementComputingChildren());
+    }
 
-            final String statement = customer.statement();
-            System.out.println("statement = " + statement);
+    private void testAll(String result, int day, StatementComputing priceCode) {
+        final Rental rental = new Rental(new Movie(TITLE, priceCode), day);
+        final Customer customer = new Customer(CUSTOMER_NAME);
+        customer.addRental(rental);
 
-            assertTrue(statement.equals(results[priceCode.ordinal()]));
-        }
+        final String statement = customer.statement();
+        System.out.println("statement = " + statement);
+
+        assertTrue(statement.equals(result));
     }
 
     private String getPr(String num, String amount, int points) {

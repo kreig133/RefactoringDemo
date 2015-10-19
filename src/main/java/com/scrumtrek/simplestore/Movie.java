@@ -5,18 +5,18 @@ package com.scrumtrek.simplestore;
  */
 public class Movie {
 	private String title;
-	private PriceCodes priceCode;
+	private StatementComputing priceCode;
 
-	public Movie(String title, PriceCodes priceCode) {
+	public Movie(String title, StatementComputing priceCode) {
 		this.title = title;
 		this.priceCode = priceCode;
 	}
 
-	public PriceCodes getPriceCode()	{
+	public StatementComputing getPriceCode()	{
 		return priceCode;
 	}
 	
-	public void setPriceCode(PriceCodes value) {
+	public void setPriceCode(StatementComputing value) {
 		priceCode = value;
 	}
 
