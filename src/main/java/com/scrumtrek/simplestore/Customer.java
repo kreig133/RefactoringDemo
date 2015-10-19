@@ -21,8 +21,7 @@ public class Customer {
 		rentals.add(arg);
 	}
 
-	public String statement()
-	{
+	public String statement() {
 		double totalAmount = 0;
 		int frequentRenterPoints = 0;
 				
@@ -35,8 +34,7 @@ public class Customer {
 			frequentRenterPoints++;
 
 			// Add bonus for a two-day new-release rental
-			if ((each.getMovie().getPriceCode() instanceof StatementComputingNewRelease) && (each.getDaysRented() > 1))
-			{
+			if (needToAddBonus(each)) {
 				frequentRenterPoints ++;
 			}
 
@@ -47,6 +45,11 @@ public class Customer {
 
 
 		return generateStatement(totalAmount, frequentRenterPoints, rentalReport.toString());
+	}
+
+	boolean needToAddBonus(Rental each) {
+		return each.getMovie().getPriceCode() instanceof StatementComputingNewRelease
+				&& each.getDaysRented() > 1;
 	}
 
 	@VisibleForTesting
@@ -67,18 +70,28 @@ public class Customer {
 
 	@VisibleForTesting
 	String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
-		return new StringBuilder("Rental record for ")
-				.append(name)
-				.append("\n")
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		addStatementHeader(stringBuilder);
+
+		return stringBuilder
+
 				.append(rentalReport)
 				// Add footer lines
-				.append("Amount owed is " )
+				.append("Amount owed is ")
 				.append(totalAmount)
 				.append("\n")
 				.append("You earned ")
 				.append(frequentRenterPoints)
 				.append(" frequent renter points.")
 				.toString();
+	}
+
+	private void addStatementHeader(StringBuilder stringBuilder) {
+		stringBuilder
+				.append("Rental record for ")
+				.append(name)
+				.append("\n");
 	}
 }
 
