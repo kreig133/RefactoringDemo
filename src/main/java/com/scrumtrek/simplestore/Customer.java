@@ -19,7 +19,7 @@ public class Customer {
         rentals.add(arg);
     }
 
-	public List<Rental> getRentals() {
-		return rentals;
-	}
+    public List<Rental> getRentals() {
+        return rentals;
+    }
 }

@@ -7,6 +7,9 @@ import com.scrumtrek.simplestore.Rental;
 
 public class StatementGenerator {
 
+    private StatementGenerator() {
+    }
+
     public static String generateStatement(Customer customer) {
         StringBuilder stringBuilder = new StringBuilder();
 
