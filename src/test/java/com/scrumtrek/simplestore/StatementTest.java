@@ -5,9 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Alexey on 18.10.2015.
- */
 public class StatementTest {
     private String CUSTOMER_NAME = "CUSTOMER_NAME";
     private static final String TITLE = "title";
