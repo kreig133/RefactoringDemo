@@ -43,9 +43,10 @@ public class Customer {
 			totalAmount += thisAmount;
 		}
 
-		return generateStatement(totalAmount, frequentRenterPoints, rentalReport.toString());
+		return StatementGenerator.generateStatement(name, totalAmount, frequentRenterPoints, rentalReport.toString());
 	}
 
+	@VisibleForTesting
 	boolean needToAddBonus(Rental each) {
 		return each.getMovie().getComputingStrategy() instanceof StatementComputingStrategyNewRelease
 				&& each.getDaysRented() > 1;
@@ -61,37 +62,15 @@ public class Customer {
 	}
 
 	@VisibleForTesting
-	void generateStatementPartForRental(StringBuilder rentalReport, Rental each, double thisAmount) {
-		rentalReport.append("\t").append(each.getMovie().getTitle()).append("\t").append(thisAmount).append("\n");
-	}
-
-	@VisibleForTesting
-	String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
-		StringBuilder stringBuilder = new StringBuilder();
-		
-		addStatementHeader(stringBuilder);
-
-		//add body
-		stringBuilder.append(rentalReport);
-
-		addStatementFooter(stringBuilder, totalAmount, frequentRenterPoints);
-		return stringBuilder.toString();
-	}
-
-	private void addStatementFooter(StringBuilder stringBuilder, double totalAmount, int frequentRenterPoints) {
-		stringBuilder.append("Amount owed is ")
-				.append(totalAmount)
-				.append("\n")
-				.append("You earned ")
-				.append(frequentRenterPoints)
-				.append(" frequent renter points.");
-	}
-
-	private void addStatementHeader(StringBuilder stringBuilder) {
-		stringBuilder
-				.append("Rental record for ")
-				.append(name)
+	void generateStatementPartForRental(StringBuilder rentalReport, Rental rental, double thisAmount) {
+		rentalReport
+				.append("\t")
+				.append(rental.getMovie().getTitle())
+				.append("\t")
+				.append(thisAmount)
 				.append("\n");
 	}
+
+
 }
 
