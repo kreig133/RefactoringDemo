@@ -1,5 +1,7 @@
 package com.scrumtrek.simplestore;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class Customer {
 		return generateStatement(totalAmount, frequentRenterPoints, rentalReport);
 	}
 
-
+	@VisibleForTesting
 	double calculateAmountForRental(Rental rental) {
 		double thisAmount = 0;
 
@@ -76,6 +78,7 @@ public class Customer {
 		return thisAmount;
 	}
 
+	@VisibleForTesting
 	String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
 		String result = "Rental record for " + name + "\n";
 		result += rentalReport;
