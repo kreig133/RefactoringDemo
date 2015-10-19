@@ -18,7 +18,7 @@ public class CustomerTest{
     @Test
     public void testNewRelease() {
         final Customer customer = new Customer(CUSTOMER_NAME);
-        final Rental rental = getRental(new StatementComputingNewRelease());
+        final Rental rental = getRental(new StatementComputingStrategyNewRelease());
 
         customer.addRental(rental);
 
@@ -28,7 +28,7 @@ public class CustomerTest{
         assertTrue(customer.getName().equals(CUSTOMER_NAME));
     }
 
-    private Rental getRental(StatementComputing newRelease) {
+    private Rental getRental(StatementComputingStrategy newRelease) {
         final Movie movie = new Movie(TITLE, newRelease);
         return new Rental(movie, 10);
     }
@@ -36,9 +36,9 @@ public class CustomerTest{
     @Test
     public void testStatement() {
         // Create movies
-        Movie movCinderella = new Movie("Cinderella", new StatementComputingChildren());
-        Movie movStarWars = new Movie("Star Wars", new StatementComputingRegular());
-        Movie movGladiator = new Movie("Gladiator", new StatementComputingNewRelease());
+        Movie movCinderella = new Movie("Cinderella", new StatementComputingStrategyChildren());
+        Movie movStarWars = new Movie("Star Wars", new StatementComputingStrategyRegular());
+        Movie movGladiator = new Movie("Gladiator", new StatementComputingStrategyNewRelease());
 
         // Create customers
         Customer custMickeyMouse = new Customer("Mickey Mouse");

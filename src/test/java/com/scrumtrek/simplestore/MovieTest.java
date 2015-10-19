@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class MovieTest {
 
     private Movie movie;
-    private StatementComputing childrens = new StatementComputingChildren();
+    private StatementComputingStrategy childrens = new StatementComputingStrategyChildren();
     private String title = "title";
 
     @Before
@@ -17,15 +17,15 @@ public class MovieTest {
     }
 
     @Test
-    public void testGetPriceCode() {
-        assertEquals(movie.getPriceCode(), childrens);
+    public void testComputingStrategy() {
+        assertEquals(movie.getComputingStrategy(), childrens);
     }
 
     @Test
-    public void testSetPriceCode() {
-        StatementComputing newPriceCode = new StatementComputingRegular();
-        movie.setPriceCode(newPriceCode);
-        assertEquals(movie.getPriceCode(), newPriceCode);
+    public void testSetComputingStrategy() {
+        StatementComputingStrategy computingStrategy = new StatementComputingStrategyRegular();
+        movie.setComputingStrategy(computingStrategy);
+        assertEquals(movie.getComputingStrategy(), computingStrategy);
     }
 
     @Test
