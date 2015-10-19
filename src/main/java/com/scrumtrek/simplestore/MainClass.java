@@ -23,7 +23,7 @@ class MainClass {
 		custMickeyMouse.addRental(rental3);
 
 		// Generate invoice
-		String statement = custMickeyMouse.Statement();
+		String statement = custMickeyMouse.statement();
 
 		// Print the statement
 		System.out.println(statement);		

@@ -4,54 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-	private String m_Name;
-	private List<Rental> m_Rentals = new ArrayList<Rental>();
+	private String name;
+	private List<Rental> rentals = new ArrayList<>();
 
 	public Customer(String name) {
-		m_Name = name;
+		this.name = name;
 	}
 
 	public String getName() {
-		return m_Name;
+		return name;
 	}
 
 
 	public void addRental(Rental arg){
-		m_Rentals.add(arg);
+		rentals.add(arg);
 	}
 
-	public String Statement()
+	public String statement()
 	{
 		double totalAmount = 0;
 		int frequentRenterPoints = 0;
 				
-		String result = "Rental record for " + m_Name + "\n";
-		
-		for(Rental each: m_Rentals) {
-			double thisAmount = 0;
-			
-			// Determine amounts for each line
-			switch(each.getMovie().getPriceCode()) {
-				case Regular:
-					thisAmount += 2;
-					if (each.getDaysRented() > 2)
-					{
-						thisAmount += (each.getDaysRented() - 2) * 1.5;
-					}
-					break;
-	
-				case NewRelease:
-					thisAmount += each.getDaysRented() * 3;
-					break;
-	
-				case Childrens:
-					thisAmount += 1.5;
-					if (each.getDaysRented() > 3)
-					{
-						thisAmount = (each.getDaysRented() - 3) * 1.5;
-					}
-					break;
-			}
+		String rentalReport = "";
+		for(Rental each: rentals) {
+			double thisAmount = calculateThisAmount(each);
 
 			// Add frequent renter points
 			frequentRenterPoints++;
@@ -63,10 +39,45 @@ public class Customer {
 			}
 
 			// Show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
+			rentalReport += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
 			totalAmount += thisAmount;
 		}
 
+
+		return generateStatement(totalAmount, frequentRenterPoints, rentalReport);
+	}
+
+	private double calculateThisAmount(Rental each) {
+		double thisAmount = 0;
+
+		// Determine amounts for each line
+		switch(each.getMovie().getPriceCode()) {
+            case Regular:
+                thisAmount += 2;
+                if (each.getDaysRented() > 2)
+                {
+                    thisAmount += (each.getDaysRented() - 2) * 1.5;
+                }
+                break;
+
+            case NewRelease:
+                thisAmount += each.getDaysRented() * 3;
+                break;
+
+            case Childrens:
+                thisAmount += 1.5;
+                if (each.getDaysRented() > 3)
+                {
+                    thisAmount = (each.getDaysRented() - 3) * 1.5;
+                }
+                break;
+        }
+		return thisAmount;
+	}
+
+	private String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
+		String result = "Rental record for " + name + "\n";
+		result += rentalReport;
 		// Add footer lines
 		result += "Amount owed is " + totalAmount + "\n";
 		result += "You earned " + frequentRenterPoints + " frequent renter points.";

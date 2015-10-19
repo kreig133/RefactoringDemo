@@ -23,7 +23,7 @@ public class CustomerTest{
 
         customer.addRental(rental);
 
-        final String statement = customer.Statement();
+        final String statement = customer.statement();
         assertTrue(statement.contains(TITLE + "\t"+ 30));
 
         assertTrue(customer.getName().equals(CUSTOMER_NAME));
@@ -54,7 +54,7 @@ public class CustomerTest{
         custMickeyMouse.addRental(rental2);
         custMickeyMouse.addRental(rental3);
 
-        String statement = custMickeyMouse.Statement();
+        String statement = custMickeyMouse.statement();
 
         assertEquals(statement,
                 "Rental record for Mickey Mouse\n" +
