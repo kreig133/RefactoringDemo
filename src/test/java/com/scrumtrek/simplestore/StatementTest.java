@@ -30,7 +30,7 @@ public class StatementTest {
         custMickeyMouse.addRental(rental2);
         custMickeyMouse.addRental(rental3);
 
-        String statement = StatementGenerator.statement(custMickeyMouse);
+        String statement = StatementGenerator.generateStatement(custMickeyMouse);
 
         final String actualStatement = "Rental record for Mickey Mouse\n" +
                 "\tCinderella\t3.0\n" +
@@ -69,7 +69,7 @@ public class StatementTest {
         final Customer customer = new Customer(CUSTOMER_NAME);
         customer.addRental(rental);
 
-        final String statement = StatementGenerator.statement(customer);
+        final String statement = StatementGenerator.generateStatement(customer);
         System.out.println("statement = " + statement);
 
         assertTrue(statement.equals(result));

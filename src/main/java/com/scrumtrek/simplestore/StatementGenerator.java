@@ -4,35 +4,25 @@ package com.scrumtrek.simplestore;
 import com.google.common.annotations.VisibleForTesting;
 
 public class StatementGenerator {
-    public static String statement(Customer customer) {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
 
-        StringBuilder rentalReport = new StringBuilder();
+    public static String generateStatement(Customer customer) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        for (Rental each : customer.getRentals()) {
-            double thisAmount1 = 0;
+        addStatementHeader(stringBuilder, customer.getName());
 
-            thisAmount1 = each.getMovie().getComputingStrategy().computeAmount(thisAmount1, each.getDaysRented());
+        addStatementBody(stringBuilder, customer);
 
-            double thisAmount = thisAmount1;
-
-            // Add frequent renter points
-            frequentRenterPoints++;
-
-            // Add bonus for a two-day new-release rental
-            if (each.getMovie().getComputingStrategy().needToAddBonus(each.getDaysRented())) {
-                frequentRenterPoints++;
-            }
-
-            // Show figures for this rental
-            generateStatementPartForRental(rentalReport, each, thisAmount);
-            totalAmount += thisAmount;
-        }
-
-        return generateStatement(customer.getName(), totalAmount, frequentRenterPoints, rentalReport.toString());
+        addStatementFooter(stringBuilder, customer);
+        return stringBuilder.toString();
     }
 
+    private static void addStatementBody(StringBuilder stringBuilder, Customer customer) {
+        for (Rental each : customer.getRentals()) {
+            // Show figures for this rental
+            generateStatementPartForRental(stringBuilder, each,
+                    each.getMovie().getComputingStrategy().computeAmount(0, each.getDaysRented()));
+        }
+    }
 
     @VisibleForTesting
     static void generateStatementPartForRental(StringBuilder rentalReport, Rental rental, double thisAmount) {
@@ -44,33 +34,45 @@ public class StatementGenerator {
                 .append("\n");
     }
 
-    public static String generateStatement(String name, double totalAmount, int frequentRenterPoints, String rentalReport) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        addStatementHeader(stringBuilder, name);
-
-        //add body
-        stringBuilder.append(rentalReport);
-
-        addStatementFooter(stringBuilder, totalAmount, frequentRenterPoints);
-        return stringBuilder.toString();
-    }
 
     @VisibleForTesting
-    static void addStatementFooter(StringBuilder stringBuilder, double totalAmount, int frequentRenterPoints) {
+    static void addStatementFooter(StringBuilder stringBuilder, Customer customer) {
         stringBuilder.append("Amount owed is ")
-          .append(totalAmount)
-          .append("\n")
-          .append("You earned ")
-          .append(frequentRenterPoints)
-          .append(" frequent renter points.");
+                .append(calculateTotalAmount(customer))
+                .append("\n")
+                .append("You earned ")
+                .append(calculateFrequentRenterPoints(customer))
+                .append(" frequent renter points.");
+    }
+
+    private static int calculateFrequentRenterPoints(Customer customer) {
+        int frequentRenterPoints = customer.getRentals().size();
+
+        for (Rental each : customer.getRentals()) {
+            // Add bonus for a two-day new-release rental
+            if (each.getMovie().getComputingStrategy().needToAddBonus(each.getDaysRented())) {
+                frequentRenterPoints++;
+            }
+        }
+
+        return frequentRenterPoints;
+    }
+
+    private static double calculateTotalAmount(Customer customer) {
+        double totalAmount = 0;
+
+        for (Rental each : customer.getRentals()) {
+            totalAmount += each.getMovie().getComputingStrategy().computeAmount(0, each.getDaysRented());
+        }
+
+        return totalAmount;
     }
 
     @VisibleForTesting
     static private void addStatementHeader(StringBuilder stringBuilder, String name) {
         stringBuilder
-          .append("Rental record for ")
-          .append(name)
-          .append("\n");
+                .append("Rental record for ")
+                .append(name)
+                .append("\n");
     }
 }
