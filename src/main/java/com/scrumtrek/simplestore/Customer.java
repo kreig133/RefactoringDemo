@@ -27,7 +27,7 @@ public class Customer {
 				
 		String rentalReport = "";
 		for(Rental each: rentals) {
-			double thisAmount = calculateThisAmount(each);
+			double thisAmount = calculateAmountForRental(each);
 
 			// Add frequent renter points
 			frequentRenterPoints++;
@@ -47,35 +47,36 @@ public class Customer {
 		return generateStatement(totalAmount, frequentRenterPoints, rentalReport);
 	}
 
-	private double calculateThisAmount(Rental each) {
+
+	double calculateAmountForRental(Rental rental) {
 		double thisAmount = 0;
 
 		// Determine amounts for each line
-		switch(each.getMovie().getPriceCode()) {
+		switch(rental.getMovie().getPriceCode()) {
             case Regular:
                 thisAmount += 2;
-                if (each.getDaysRented() > 2)
+                if (rental.getDaysRented() > 2)
                 {
-                    thisAmount += (each.getDaysRented() - 2) * 1.5;
+                    thisAmount += (rental.getDaysRented() - 2) * 1.5;
                 }
                 break;
 
             case NewRelease:
-                thisAmount += each.getDaysRented() * 3;
+                thisAmount += rental.getDaysRented() * 3;
                 break;
 
             case Childrens:
                 thisAmount += 1.5;
-                if (each.getDaysRented() > 3)
+                if (rental.getDaysRented() > 3)
                 {
-                    thisAmount = (each.getDaysRented() - 3) * 1.5;
+                    thisAmount = (rental.getDaysRented() - 3) * 1.5;
                 }
                 break;
         }
 		return thisAmount;
 	}
 
-	private String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
+	String generateStatement(double totalAmount, int frequentRenterPoints, String rentalReport) {
 		String result = "Rental record for " + name + "\n";
 		result += rentalReport;
 		// Add footer lines
