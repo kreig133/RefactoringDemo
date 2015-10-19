@@ -7,14 +7,13 @@ public class StatementComputingStrategyRegular implements StatementComputingStra
 
     public double computeAmount(double currentAmount, int daysRented) {
         currentAmount += 2;
-        if (daysRented > 2)
-        {
+        if (daysRented > 2) {
             currentAmount += (daysRented - 2) * 1.5;
         }
         return currentAmount;
     }
 
-    public boolean needToAddBonus(int daysMoreThanOne){
+    public boolean needToAddBonus(int daysMoreThanOne) {
         return false;
     }
 }

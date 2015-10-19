@@ -7,14 +7,13 @@ public class StatementComputingStrategyChildren implements StatementComputingStr
 
     public double computeAmount(double currentAmount, int daysRented) {
         currentAmount += 1.5;
-        if (daysRented > 3)
-        {
+        if (daysRented > 3) {
             currentAmount = (daysRented - 3) * 1.5;
         }
         return currentAmount;
     }
 
-    public boolean needToAddBonus(int daysMoreThanOne){
+    public boolean needToAddBonus(int daysMoreThanOne) {
         return false;
     }
 }

@@ -9,7 +9,7 @@ public class StatementComputingStrategyNewRelease implements StatementComputingS
         return currentAmount += daysRented * 3;
     }
 
-    public boolean needToAddBonus(int daysMoreThanOne){
+    public boolean needToAddBonus(int daysMoreThanOne) {
         return daysMoreThanOne > 1;
     }
 }

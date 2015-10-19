@@ -20,18 +20,18 @@ public class StatementGenerator {
     @VisibleForTesting
     static void addStatementFooter(StringBuilder stringBuilder, double totalAmount, int frequentRenterPoints) {
         stringBuilder.append("Amount owed is ")
-                .append(totalAmount)
-                .append("\n")
-                .append("You earned ")
-                .append(frequentRenterPoints)
-                .append(" frequent renter points.");
+          .append(totalAmount)
+          .append("\n")
+          .append("You earned ")
+          .append(frequentRenterPoints)
+          .append(" frequent renter points.");
     }
 
     @VisibleForTesting
     static private void addStatementHeader(StringBuilder stringBuilder, String name) {
         stringBuilder
-                .append("Rental record for ")
-                .append(name)
-                .append("\n");
+          .append("Rental record for ")
+          .append(name)
+          .append("\n");
     }
 }
