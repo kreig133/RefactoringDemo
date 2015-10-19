@@ -17,40 +17,40 @@ public class StatementGenerator {
     }
 
     @VisibleForTesting
-    static private void addStatementHeader(StringBuilder stringBuilder, String name) {
+    private static void addStatementHeader(StringBuilder stringBuilder, String name) {
         stringBuilder
-                .append("Rental record for ")
-                .append(name)
-                .append("\n");
+          .append("Rental record for ")
+          .append(name)
+          .append("\n");
     }
 
     private static void addStatementBody(StringBuilder stringBuilder, Customer customer) {
         for (Rental each : customer.getRentals()) {
             // Show figures for this rental
             generateStatementPartForRental(stringBuilder, each,
-                    each.getMovie().getComputingStrategy().computeAmount(each.getDaysRented()));
+              each.getMovie().getComputingStrategy().computeAmount(each.getDaysRented()));
         }
     }
 
     @VisibleForTesting
     static void generateStatementPartForRental(StringBuilder rentalReport, Rental rental, double thisAmount) {
         rentalReport
-                .append("\t")
-                .append(rental.getMovie().getTitle())
-                .append("\t")
-                .append(thisAmount)
-                .append("\n");
+          .append("\t")
+          .append(rental.getMovie().getTitle())
+          .append("\t")
+          .append(thisAmount)
+          .append("\n");
     }
 
 
     @VisibleForTesting
     static void addStatementFooter(StringBuilder stringBuilder, Customer customer) {
         stringBuilder.append("Amount owed is ")
-                .append(calculateTotalAmount(customer))
-                .append("\n")
-                .append("You earned ")
-                .append(calculateFrequentRenterPoints(customer))
-                .append(" frequent renter points.");
+          .append(calculateTotalAmount(customer))
+          .append("\n")
+          .append("You earned ")
+          .append(calculateFrequentRenterPoints(customer))
+          .append(" frequent renter points.");
     }
 
     private static int calculateFrequentRenterPoints(Customer customer) {
@@ -75,6 +75,4 @@ public class StatementGenerator {
 
         return totalAmount;
     }
-
-
 }

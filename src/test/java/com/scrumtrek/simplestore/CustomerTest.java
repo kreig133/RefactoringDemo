@@ -6,25 +6,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CustomerTest{
-    private String CUSTOMER_NAME = "CUSTOMER_NAME";
-    private static final String TITLE = "title";
+    private static final String CUSTOMER_NAME = "CUSTOMER_NAME";
 
     @Test
     public void testGetName() {
         final Customer customer = new Customer(CUSTOMER_NAME);
         assertEquals(customer.getName(), CUSTOMER_NAME);
-    }
-
-
-    private Rental getRental(StatementComputingStrategy newRelease) {
-        final Movie movie = new Movie(TITLE, newRelease);
-        return new Rental(movie, 10);
-    }
-
-
-    @Test
-    public void testRegular() throws Exception {
-
-
     }
 }
