@@ -1,7 +1,10 @@
 package com.scrumtrek.simplestore;
 
+/**
+ * List of price codes for movies
+ */
 public enum PriceCodes {
-	Regular,
-	NewRelease,
-	Childrens
+	REGULAR,
+	NEW_RELEASE,
+	CHILDRENS
 }

@@ -18,7 +18,7 @@ public class CustomerTest{
     @Test
     public void testNewRelease() {
         final Customer customer = new Customer(CUSTOMER_NAME);
-        final PriceCodes newRelease = PriceCodes.NewRelease;
+        final PriceCodes newRelease = PriceCodes.NEW_RELEASE;
         final Rental rental = getRental(newRelease);
 
         customer.addRental(rental);
@@ -35,11 +35,11 @@ public class CustomerTest{
     }
 
     @Test
-    public void testStatement1() {
+    public void testStatement() {
         // Create movies
-        Movie movCinderella = new Movie("Cinderella", PriceCodes.Childrens);
-        Movie movStarWars = new Movie("Star Wars", PriceCodes.Regular);
-        Movie movGladiator = new Movie("Gladiator", PriceCodes.NewRelease);
+        Movie movCinderella = new Movie("Cinderella", PriceCodes.CHILDRENS);
+        Movie movStarWars = new Movie("Star Wars", PriceCodes.REGULAR);
+        Movie movGladiator = new Movie("Gladiator", PriceCodes.NEW_RELEASE);
 
         // Create customers
         Customer custMickeyMouse = new Customer("Mickey Mouse");
@@ -56,13 +56,14 @@ public class CustomerTest{
 
         String statement = custMickeyMouse.Statement();
 
-        assertEquals(statement,
-                "Rental record for Mickey Mouse\n" +
-                        "\tCinderella\t3.0\n" +
-                        "\tStar Wars\t6.5\n" +
-                        "\tGladiator\t15.0\n" +
-                        "Amount owed is 24.5\n" +
-                        "You earned 4 frequent renter points.");
+        final String actualStatement = "Rental record for Mickey Mouse\n" +
+          "\tCinderella\t3.0\n" +
+          "\tStar Wars\t6.5\n" +
+          "\tGladiator\t15.0\n" +
+          "Amount owed is 24.5\n" +
+          "You earned 4 frequent renter points.";
+
+        assertEquals(statement, actualStatement);
     }
 
     @Test
