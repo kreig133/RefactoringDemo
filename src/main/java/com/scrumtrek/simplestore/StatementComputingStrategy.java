@@ -5,4 +5,6 @@ package com.scrumtrek.simplestore;
  */
 public interface StatementComputingStrategy {
     public double computeAmount(Rental rental, double thisAmount);
+
+    public boolean needToAddBonus(int daysMoreThanOne);
 }
